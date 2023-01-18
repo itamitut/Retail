@@ -46,7 +46,7 @@ driver = webdriver.Chrome()
 driver.maximize_window()
 driver.implicitly_wait(timeout)
 debet_cards = ['cards/svoya-debet', 'cards/amur-debet', 'cards/pens-debet']
-url = 'http:///10.7.27.52:81/' #'https://portal-ui-cc.cprb.dev.rshbdev.ru/'
+url = 'https://portal-ui-cc.cprb.dev.rshbdev.ru/' #'http://10.7.27.52:81/'
 
 driver.get(url)
 # кликаем ОК
@@ -54,7 +54,7 @@ driver.find_element(By.XPATH, '//button[@class="button--g31Xx button__white--pn5
 
 for debet_card in debet_cards:
     driver.get(url + debet_card)
-    time.sleep(2)
+    time.sleep(3)
     driver.find_element(By.XPATH, '//button[@class="button--g31Xx card-brief__button"]').click()
 
     """
@@ -124,40 +124,32 @@ for debet_card in debet_cards:
     # Код подразделения
     elem = driver.find_element(By.XPATH,
                                '//*[@id="root"]/div[1]/div[3]/div/div/div[1]/div[2]/div[2]/div/div[3]/div[1]/div/div/div[1]/input')
-    time.sleep(1)
     for i in range(6):
         elem.send_keys(Keys.ARROW_LEFT)
     elem.send_keys('1')
-    time.sleep(1)
     elem.send_keys(Keys.ARROW_DOWN)
-    time.sleep(1)
     elem.send_keys(Keys.ENTER)
     # choose_suggestion(elem, 'digit')
     elem = driver.find_element(By.XPATH,
                                '//*[@id="root"]/div[1]/div[3]/div/div/div[1]/div[2]/div[2]/div/div[3]/div[2]/div/div/div[1]')
     # Coгласия
-    driver.find_element(By.XPATH,
-                        '//*[@id="root"]/div[1]/div[3]/div/div/div[2]/div/div[2]/div[1]/div[1]/button').click()
-    time.sleep(3)
-    driver.find_element(By.XPATH,
-                        '/html/body/div[3]/div/div[2]/div/div[2]/div/div[3]').click()
+    consents = driver.find_elements(By.XPATH, '//button[@class="button--g31Xx button__white--pn5Tx application-debit__sign-button"]')
     time.sleep(1)
-    driver.find_element(By.XPATH,
-                        '//*[@id="root"]/div[1]/div[3]/div/div/div[2]/div/div[2]/div[1]/div[2]/button').click()
+    consents[0].click()
+    time.sleep(2)
+    driver.find_element(By.XPATH, '//button[@class="button--g31Xx modal-consent__button-sing"]').click()
     time.sleep(1)
-    driver.find_element(By.XPATH,
-                        '/html/body/div[3]/div/div[2]/div/div[2]/div/div[3]').click()
-    time.sleep(1)
-    driver.find_element(By.XPATH,
-                        '//*[@id="root"]/div[1]/div[3]/div/div/div[2]/div/div[2]/div[3]').click()
-    time.sleep(1)
+    consents[1].click()
+    time.sleep(2)
+    driver.find_element(By.XPATH, '//button[@class="button--g31Xx modal-consent__button-sing"]').click()
+    time.sleep(2)
+    driver.find_element(By.XPATH, '//button[@class="button--g31Xx application-debit__submit-button"]').click()
     fill_fake_sms()
     time.sleep(1)
 
-    # Second page
+    # Second page - Параметры карты
 
     # Select currency
-    time.sleep(3)
     currencies = driver.find_elements(By.XPATH,
                                       '//button[@class="button--g31Xx button__inline--EKkD5 card-data-debit__radio-btn" or @class="button--g31Xx button__inline--EKkD5 card-data-debit__radio-btn card-data-debit__radio-btn_active"]')
     chosen_currency = random.choice(currencies)
@@ -236,16 +228,17 @@ for debet_card in debet_cards:
     branches[1].send_keys(Keys.DOWN)
     branches[1].send_keys(Keys.ENTER)
     # Согласия
-    consenses = driver.find_elements(By.XPATH,
-                                     '//button[@class="button--g31Xx button__white--pn5Tx consents-actions-debit__sign-button"]')
-    consenses[0].click()
+    consents = driver.find_elements(By.XPATH, '//button[@class="button--g31Xx button__white--pn5Tx consents-actions-debit__sign-button"]')
+    time.sleep(1)
+    consents[0].click()
+    time.sleep(1)
     driver.find_element(By.XPATH, '//button[@class="button--g31Xx modal-consent__button-sing"]').click()
     time.sleep(1)
-    consenses[1].click()
-    driver.find_element(By.XPATH, '//button[@class="button--g31Xx modal-consent__button-sing"]').click()
-    # Ознакомиться и отправить
-    driver.find_element(By.XPATH, '//*[@id="root"]/div[1]/div[2]/div/div/div/div[2]/div/div/div[3]/button').click()
+    consents[1].click()
     time.sleep(1)
+    driver.find_element(By.XPATH, '//button[@class="button--g31Xx modal-consent__button-sing"]').click()
+    time.sleep(1)
+    driver.find_element(By.XPATH, '//button[@class="button--g31Xx consents-actions-debit__submit-button"]').click()
     # SMS
     fill_fake_sms()
 #    time.sleep(3)
