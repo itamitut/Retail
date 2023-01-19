@@ -31,7 +31,6 @@ driver.maximize_window()
 driver.implicitly_wait(timeout)
 
 driver.get("http://10.7.27.52:81/")
-time.sleep(2)
 # кликаем ОК
 driver.find_element(By.XPATH, '//button[@class="button--g31Xx button__white--pn5Tx cookie-consent__submit-button"]').click()
 #driver.find_element("link text", "Понятно")
@@ -40,11 +39,11 @@ driver.find_element(By.XPATH, '//a[@href="/cards/svoya"]').click()
 time.sleep(1)
 driver.find_element(By.XPATH, '//button[@class="button--g31Xx card-brief__button"]').click()
 driver.find_element(By.XPATH, '//button[@class="button--g31Xx choose-application-way__continue-button"]').click()
-time.sleep(3)
+time.sleep(1)
 # Заполняем поля анкеты
 elem = driver.find_element(By.XPATH, '//*[@id="root"]/div[1]/div[2]/div/div/div[1]/div[1]/div[2]/div/div[1]/div[1]/div/div/div/input')
 choose_suggestion(elem, 'char')
-time.sleep(3)
+time.sleep(1)
 elem = driver.find_element(By.XPATH,
                            '//*[@id="root"]/div[1]/div[2]/div/div/div[1]/div[1]/div[2]/div/div[1]/div[2]/div/div/div/input')
 choose_suggestion(elem, 'char')
