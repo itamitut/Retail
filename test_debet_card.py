@@ -75,7 +75,8 @@ for debet_card in debet_cards:
     elem = driver.find_element(By.XPATH,
                                '//*[@id="root"]/div[1]/div[3]/div/div/div[1]/div[1]/div[2]/div/div[4]/div[1]/div/div[1]/input')
     elem.click()
-    slow_input(elem, '9091239456')
+    slow_input(elem, '9' + str(random.randint(111111111, 999999999)))
+    # Email
     elem = driver.find_element(By.XPATH,
                                '//*[@id="root"]/div[1]/div[3]/div/div/div[1]/div[1]/div[2]/div/div[4]/div[2]/div/div/div[1]/input')
     slow_input(elem, 'iii@mail.com')
