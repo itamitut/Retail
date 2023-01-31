@@ -123,13 +123,10 @@ for debet_card in debet_cards:
     #SMS
     WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.XPATH, '//input[@class="smsCodeInput__digit--O14Lj"]')))
     fill_fake_sms()
-
     # Second page - Параметры карты
-
     # Select currency
     currencies_buttons = '//button[@class="button--g31Xx button__inline--EKkD5 card-data-debit__radio-btn" or @class="button--g31Xx button__inline--EKkD5 card-data-debit__radio-btn card-data-debit__radio-btn_active"]'
-    EC.presence_of_all_elements_located(currencies_buttons)
-    currencies = driver.find_elements(By.XPATH, currencies_buttons)
+    currencies = WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.XPATH, currencies_buttons)))
     chosen_currency = random.choice(currencies)
     chosen_currency.click()
     # Select paymentsystem
@@ -216,7 +213,7 @@ for debet_card in debet_cards:
     # SMS
     WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.XPATH, '//input[@class="smsCodeInput__digit--O14Lj"]')))
     fill_fake_sms()
-    #Check result
+
 
 #    assert driver.find_element(By.XPATH, '//div[@class="modal-sent__title"]').text == 'Заявка отправлена'
 driver.quit()
