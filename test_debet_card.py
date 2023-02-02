@@ -44,8 +44,6 @@ def fill_fake_sms():
 timeout = 5
 driver = webdriver.Chrome()
 driver.maximize_window()
-#wait = WebDriverWait(driver, 10)  # seconds
-#driver.implicitly_wait(timeout)
 debet_cards = ['cards/svoya-debet', 'cards/amur-debet', 'cards/pens-debet']
 url = 'https://portal-ui-cc.cprb.dev.rshbdev.ru/' #'http://10.7.27.52:81/'
 
