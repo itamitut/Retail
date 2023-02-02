@@ -9,7 +9,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 # Выбирает из подсказок рандомную:
 def choose_suggestion(elem, type):
-    alpha = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ж', 'З', 'И', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Х',
+    alpha = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'З', 'И', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Х',
              'Ч', 'Э', 'Ю', 'Я']
     elem.click()
     if type == 'char':
@@ -123,6 +123,8 @@ for debet_card in debet_cards:
     #SMS
     WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.XPATH, '//input[@class="smsCodeInput__digit--O14Lj"]')))
     fill_fake_sms()
+    time.sleep(5)
+
     # Second page - Параметры карты
     # Select currency
     currencies_buttons = '//button[@class="button--g31Xx button__inline--EKkD5 card-data-debit__radio-btn" or @class="button--g31Xx button__inline--EKkD5 card-data-debit__radio-btn card-data-debit__radio-btn_active"]'

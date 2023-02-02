@@ -117,6 +117,10 @@ elem.send_keys(Keys.ENTER)
 
 #Место жительства
 
+
+
+
+
 """
 # Coгласия
 consents = driver.find_elements(By.XPATH,
