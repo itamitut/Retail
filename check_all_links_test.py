@@ -8,8 +8,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 driver = webdriver.Chrome()
 driver.maximize_window()
-urls = ["https://portal-ui-cc.cprb.rshbdev.ru/", "https://portal-ui-cc.cprb.dev.rshbdev.ru/"]
-#PROD "https://retail-test.rshb.ru/"
+urls = ["https://portal-ui-cc.cprb.dev.rshbdev.ru/", "https://portal-ui-cc.cprb.rshbdev.ru/", "https://retail.rshb.ru/"]
+#
 for url in urls:
     driver.get(url)
     #кликаем ОК
