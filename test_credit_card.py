@@ -1,10 +1,12 @@
 import random
 import time
-from selenium.webdriver.support import expected_conditions as EC
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+
 
 # Выбирает из подсказок рандомную:
 def choose_suggestion(elem, type):
@@ -21,11 +23,14 @@ def choose_suggestion(elem, type):
         elem.send_keys(Keys.DOWN)
     elem.send_keys(Keys.ENTER)
 
+
 # Замедление ввода символов в поля
 def slow_input(elem, text):
     for character in text:
         elem.send_keys(character)
         time.sleep(0.1)  # pause for 0.2 seconds
+    elem.click()
+
 
 # Ввод смс кода в тестовом режиме
 def fill_fake_sms():
@@ -35,27 +40,25 @@ def fill_fake_sms():
     sms_digits[2].send_keys('3')
     sms_digits[3].send_keys('4')
     driver.find_element(By.XPATH, '//button[@class="button--g31Xx sms-confirmation__button"]').click()
-    time.sleep(2)
+    time.sleep(1)
+
+
 
 driver = webdriver.Chrome()
 driver.maximize_window()
 
-
 driver.get("https://portal-ui-cc.cprb.dev.rshbdev.ru")
-#"https://portal-ui-cc.cprb.rshbdev.ru/"
+# "https://portal-ui-cc.cprb.rshbdev.ru/"
 # кликаем ОК
-driver.find_element(By.XPATH, '//button[@class="button--g31Xx button__white--pn5Tx cookie-consent__submit-button"]').click()
-
-#Параметры кредита
-loan_sum = 20_000 #Сумма
-loan_term = 24 #Cрок в мес
-is_rshb = 0 #Получаю зп на счет в Рсхб
-insurance = 1 #Комплексная страховая защита
+driver.find_element(By.XPATH,
+                    '//button[@class="button--g31Xx button__white--pn5Tx cookie-consent__submit-button"]').click()
 
 # Открываем анкету
 WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//a[@href="/cards/svoya"]'))).click()
-WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//button[@class="button--g31Xx card-brief__button"]'))).click()
-WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//button[@class="button--g31Xx choose-application-way__continue-button"]'))).click()
+WebDriverWait(driver, 10).until(
+    EC.element_to_be_clickable((By.XPATH, '//button[@class="button--g31Xx card-brief__button"]'))).click()
+WebDriverWait(driver, 10).until(EC.element_to_be_clickable(
+    (By.XPATH, '//button[@class="button--g31Xx choose-application-way__continue-button"]'))).click()
 
 # Заполняем поля анкеты
 fio = driver.find_elements(By.XPATH, '//input[@class="smartInput__input--zqFgL"]')
@@ -65,7 +68,7 @@ for i in range(3):
 # выбираем пол:
 sex = driver.find_elements(By.XPATH, '//input[@class="radio__optionInput--fSYTn"]')[:2]
 random.choice(sex).click()
-#Место рождения
+# Место рождения
 fio[3].send_keys('Рим')
 # ДР через календарь
 WebDriverWait(driver, 10).until(
@@ -109,67 +112,48 @@ elem.click()
 slow_input(elem, str(random.randint(100000, 999999)))
 
 # Дата выдачи
+driver.find_element(By.XPATH,
+                           '/html/body/div[2]/div[1]/div[2]/div/div/div[1]/div[2]/div[2]/div/div[1]/div[3]/div/div[1]/div').click()
 elem = driver.find_element(By.XPATH,
-                           '//*[@id="root"]/div[1]/div[2]/div/div/div[1]/div[2]/div[2]/div/div[1]/div[3]/div/div')
-elem.click()
-elem = driver.find_element(By.XPATH,
-                           '//*[@id="root"]/div[1]/div[2]/div/div/div[1]/div[2]/div[2]/div/div[1]/div[3]/div/div/div/input')
+                           '/html/body/div[2]/div[1]/div[2]/div/div/div[1]/div[2]/div[2]/div/div[1]/div[3]/div/div[1]/div/input')
 slow_input(elem, '11112000')
 
 # Код подразделения
+driver.find_element(By.XPATH,
+                           '//*[@id="root"]/div[1]/div[2]/div/div/div[1]/div[2]/div[2]/div/div[2]/div[1]/div/div').click()
 elem = driver.find_element(By.XPATH,
                            '//*[@id="root"]/div[1]/div[2]/div/div/div[1]/div[2]/div[2]/div/div[2]/div[1]/div/div/div/input')
+elem.click()
 for i in range(6):
     elem.send_keys(Keys.ARROW_LEFT)
 elem.send_keys('1')
 elem.send_keys(Keys.ARROW_DOWN)
 elem.send_keys(Keys.ENTER)
 
-#Место жительства
-#Выбираем заполнение полями
+# Место жительства
+# Выбираем заполнение полями
 driver.find_elements(By.XPATH, '//input[@class="radio__optionInput--fSYTn"]')[3].click()
 address_fields = driver.find_elements(By.XPATH, '//input[@class="smartInput__input--zqFgL"]')
 choose_suggestion(address_fields[0], 'char')
 choose_suggestion(address_fields[2], 'char')
 choose_suggestion(address_fields[3], 'char')
-address_fields[5].send_keys('1')
+address_fields[4].send_keys('1')
 slow_input(address_fields[8], '123456')
 time.sleep(4)
-#Дата регистрации
+# Дата регистрации
+
+driver.find_element(By.XPATH,
+                           '//*[@id="root"]/div[1]/div[2]/div/div/div[1]/div[3]/div[2]/div[2]/div[2]/div/div/div/div').click()
 elem = driver.find_element(By.XPATH,
-                           '//*[@id="root"]/div[1]/div[2]/div/div/div[1]/div[3]/div[2]/div[2]/div[2]/div/div/div[1]/div')
-elem.click()
-elem = driver.find_element(By.XPATH,
-                           '//*[@id="root"]/div[1]/div[2]/div/div/div[1]/div[3]/div[2]/div[2]/div[2]/div/div/div[1]/div/input')
-slow_input(elem, '11112000')
-
-#Адрес фактического проживания через календарь
-WebDriverWait(driver, 10).until(
-    EC.element_to_be_clickable((By.XPATH, '//div[@class="content__control--U7mF7"]'))).click()
-year_arrow = WebDriverWait(driver, 10).until(
-    EC.element_to_be_clickable((By.XPATH, '//div[@class="date__leftDoubleArrow--uitfe"]')))
-month_arrow = WebDriverWait(driver, 10).until(
-    EC.element_to_be_clickable((By.XPATH, '//div[@class="date__leftArrow--dfVtT"]')))
-for i in range(random.randint(1, 10)):
-    year_arrow.click()
-    time.sleep(0.05)  # pause for 0.05 second for i in range(random.randint(21, 65)):
-for i in range(random.randint(0, 13)):
-    month_arrow.click()
-    time.sleep(0.05)  # pause for 0.05 seconds
-
-dates = driver.find_elements(By.XPATH,
-                             '//li[@class="date__listItem--y10uz"]')
-date = random.choice(dates)
-date.click()
-
-time.sleep(5)
-driver.find_element(By.XPATH, '//*[@id="root"]/div[1]/div[2]/div/div/div[1]/div[3]/div[2]/div[4]/label/div/input').click()
-
-time.sleep(5)
-
-#Среднемесячный доход
+                           '//*[@id="root"]/div[1]/div[2]/div/div/div[1]/div[3]/div[2]/div[2]/div[2]/div/div/div/div/input')
+slow_input(elem, '11112001')
+address_fields[8].click()
+#Checkbox
+checkbox =  driver.find_elements(By.XPATH, '//input[@class="checkbox__input--GTFhJ"]')
+checkbox[1].click()
+# Среднемесячный доход
 address_fields[10].send_keys('100000')
-#Отделение Банка
+# Отделение Банка
 branches = driver.find_elements(By.XPATH, '//input[@class="content__input--Tmhjf"]')
 time.sleep(1)
 branches[0].click()
@@ -182,21 +166,29 @@ branches[1].send_keys(Keys.DOWN)
 branches[1].send_keys(Keys.ENTER)
 # Coгласия
 consents = driver.find_elements(By.XPATH,
-                                '//button[@class="button--g31Xx button__white--pn5Tx application-debit__sign-button"]')
+                                '//button[@class="button--g31Xx button__white--pn5Tx application-short__sign-button"]')
 consents[0].click()
 WebDriverWait(driver, 10).until(EC.element_to_be_clickable(
     (By.XPATH, '//button[@class="button--g31Xx modal-consent__button-sing"]'))).click()
 consents[1].click()
+WebDriverWait(driver, 10).until(EC.element_to_be_clickable(
+    (By.XPATH, '//button[@class="button--g31Xx modal-consent__button-sing"]'))).click()
+
+WebDriverWait(driver, 10).until(
+    EC.element_to_be_clickable((By.XPATH, '//button[@class="button--g31Xx application-short__submit-button"]'))).click()
+time.sleep(2)
+# WebDriverWait(driver, 10).until(
+#     EC.presence_of_all_elements_located((By.XPATH, '//input[@class="smsCodeInput__digit--O14Lj"]')))
+# SMS
+fill_fake_sms()
+#Согласие БКИ
+WebDriverWait(driver, 10).until(
+    EC.element_to_be_clickable((By.XPATH, '//button[@class="button--g31Xx modalBki__button-continue"]'))).click()
 WebDriverWait(driver, 10).until(
     EC.element_to_be_clickable((By.XPATH, '//button[@class="button--g31Xx modal-consent__button-sing"]'))).click()
-WebDriverWait(driver, 10).until(
-    EC.element_to_be_clickable((By.XPATH, '//button[@class="button--g31Xx application-debit__submit-button"]'))).click()
-# SMS
-WebDriverWait(driver, 10).until(
-    EC.presence_of_all_elements_located((By.XPATH, '//input[@class="smsCodeInput__digit--O14Lj"]')))
+time.sleep(2)
 fill_fake_sms()
-
-
+"""
 # Second page - Параметры карты
 # Select currency
 currencies_buttons = '//button[@class="button--g31Xx button__inline--EKkD5 card-data-debit__radio-btn" or @class="button--g31Xx button__inline--EKkD5 card-data-debit__radio-btn card-data-debit__radio-btn_active"]'
@@ -214,8 +206,6 @@ categories = driver.find_elements(By.XPATH, '//li[@role="option"]')
 category = categories[0]
 # category = random.choice(categories)
 category.click()
+"""
 
 driver.quit()
-
-
-
