@@ -46,23 +46,15 @@ driver.get("https://portal-ui-cc.cprb.dev.rshbdev.ru")
 # кликаем ОК
 driver.find_element(By.XPATH, '//button[@class="button--g31Xx button__white--pn5Tx cookie-consent__submit-button"]').click()
 
+#Параметры кредита
+loan_sum = 20_000 #Сумма
+loan_term = 24 #Cрок в мес
+is_rshb = 0 #Получаю зп на счет в Рсхб
+insurance = 1 #Комплексная страховая защита
 
 # Открываем анкету
-WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//a[@href="/cards/svoya"]'))).click()
-WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//button[@class="button--g31Xx card-brief__button"]'))).click()
-WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//button[@class="button--g31Xx choose-application-way__continue-button"]'))).click()
+WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//a[@href="/loans/bez_op"]'))).click()
 
-#Дата регистрации
-elem = driver.find_element(By.XPATH,
-                           '//*[@id="root"]/div[1]/div[2]/div/div/div[1]/div[3]/div[2]/div[2]/div[2]/div/div/div[1]/div')
-elem.click()
-elem = driver.find_element(By.XPATH,
-                           '//*[@id="root"]/div[1]/div[2]/div/div/div[1]/div[3]/div[2]/div[2]/div[2]/div/div/div[1]/div/input')
-elem.click()
-slow_input(elem, '11112000')
-elem.click()
-#Checkbox
-driver.find_element(By.XPATH, '//*[@id="root"]/div[1]/div[2]/div/div/div[1]/div[3]/div[2]/div[4]/label/div/input').click()
 
-time.sleep(5)
+
 driver.quit()

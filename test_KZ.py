@@ -43,7 +43,7 @@ def fill_fake_sms():
 driver = webdriver.Chrome()
 driver.maximize_window()
 kzs = ['loans/gazomotornoye_toplivo', 'loans/dlya_samozanyatykh/', 'loans/offer_villagers']
-url = 'https://portal-ui-cc.cprb.dev.rshbdev.ru/'  # 'http:///10.7.27.52:81/'
+url = 'https://portal-ui-cc.cprb.dev.rshbdev.ru/'
 driver.get(url)
 # кликаем ОК
 driver.find_element(By.XPATH,
@@ -67,7 +67,7 @@ for kz in kzs:
         EC.element_to_be_clickable((By.XPATH, '//div[@class="date__leftArrow--dfVtT"]')))
     for i in range(random.randint(21, 64)):
         year_arrow.click()
-        time.sleep(0.05)  # pause for 0.05 secondsfor i in range(random.randint(21, 65)):
+        time.sleep(0.05)  # pause for 0.05 second for i in range(random.randint(21, 65)):
     for i in range(random.randint(0, 13)):
         month_arrow.click()
         time.sleep(0.05)  # pause for 0.05 seconds

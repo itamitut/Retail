@@ -45,7 +45,8 @@ timeout = 5
 driver = webdriver.Chrome()
 driver.maximize_window()
 debet_cards = ['cards/svoya-debet', 'cards/amur-debet', 'cards/pens-debet']
-url = 'https://portal-ui-cc.cprb.dev.rshbdev.ru/' #'http://10.7.27.52:81/'
+url = 'https://portal-ui-cc.cprb.dev.rshbdev.ru/'
+
 
 driver.get(url)
 # кликаем ОК
