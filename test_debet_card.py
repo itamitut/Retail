@@ -214,7 +214,7 @@ for debet_card in debet_cards:
     # SMS
     WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.XPATH, '//input[@class="smsCodeInput__digit--O14Lj"]')))
     fill_fake_sms()
-
-
-#    assert driver.find_element(By.XPATH, '//div[@class="modal-sent__title"]').text == 'Заявка отправлена'
+    #Assert result
+    message = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//div[@class="modal-sent__title"]')))
+    assert message.text == 'Заявка отправлена'
 driver.quit()

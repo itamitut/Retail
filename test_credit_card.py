@@ -10,7 +10,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 # Выбирает из подсказок рандомную:
 def choose_suggestion(elem, type):
-    alpha = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ж', 'З', 'И', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Х',
+    alpha = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'З', 'И', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Х',
              'Ч', 'Э', 'Ю', 'Я']
     elem.click()
     if type == 'char':
@@ -139,7 +139,6 @@ choose_suggestion(address_fields[2], 'char')
 choose_suggestion(address_fields[3], 'char')
 address_fields[4].send_keys('1')
 slow_input(address_fields[8], '123456')
-time.sleep(4)
 # Дата регистрации
 
 driver.find_element(By.XPATH,
@@ -177,8 +176,8 @@ WebDriverWait(driver, 10).until(EC.element_to_be_clickable(
 WebDriverWait(driver, 10).until(
     EC.element_to_be_clickable((By.XPATH, '//button[@class="button--g31Xx application-short__submit-button"]'))).click()
 time.sleep(2)
-# WebDriverWait(driver, 10).until(
-#     EC.presence_of_all_elements_located((By.XPATH, '//input[@class="smsCodeInput__digit--O14Lj"]')))
+WebDriverWait(driver, 10).until(
+     EC.presence_of_all_elements_located((By.XPATH, '//input[@class="smsCodeInput__digit--O14Lj"]')))
 # SMS
 fill_fake_sms()
 #Согласие БКИ
@@ -188,24 +187,141 @@ WebDriverWait(driver, 10).until(
     EC.element_to_be_clickable((By.XPATH, '//button[@class="button--g31Xx modal-consent__button-sing"]'))).click()
 time.sleep(2)
 fill_fake_sms()
-"""
+#Продолжить заполнение
+WebDriverWait(driver, 10).until(
+    EC.element_to_be_clickable((By.XPATH, '//button[@class="button--g31Xx modal-sent__button-continue"]'))).click()
+
 # Second page - Параметры карты
 # Select currency
-currencies_buttons = '//button[@class="button--g31Xx button__inline--EKkD5 card-data-debit__radio-btn" or @class="button--g31Xx button__inline--EKkD5 card-data-debit__radio-btn card-data-debit__radio-btn_active"]'
-currencies = WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.XPATH, currencies_buttons)))
-chosen_currency = random.choice(currencies)
-chosen_currency.click()
+WebDriverWait(driver, 10).until(
+    EC.element_to_be_clickable((By.XPATH, '//button[@class="button--g31Xx button__inline--EKkD5 borrower-card-data__currency borrower-card-data__currency_active"]'))).click()
 # Select paymentsystem
 paymentsystems = driver.find_elements(By.XPATH,
-                                      '//button[@class="button--g31Xx button__inline--EKkD5 card-data-debit__radio-btn card-data-debit__radio-btn__centered"]')
+                                      '//*[@id="root"]/div[1]/div[2]/div/div/div[2]/div[1]/div[2]/div/div[1]/button')
 paymentsystem = random.choice(paymentsystems)
 paymentsystem.click()
 # Card category
 driver.find_element(By.XPATH, '//div[@role="listbox"]').click()
+time.sleep(2)
 categories = driver.find_elements(By.XPATH, '//li[@role="option"]')
-category = categories[0]
-# category = random.choice(categories)
+category = random.choice(categories)
 category.click()
-"""
+driver.find_element(By.XPATH, '//button[@class="button--g31Xx applicationWidgetButtons__button"]').click()
+time.sleep(2)
+#Персональные данные
+#Образование
+elem = driver.find_element(By.XPATH, '//div[@class="content--CSXGL"]')
+elem.click()
+elem.send_keys(Keys.DOWN)
+elem.send_keys(Keys.DOWN)
+elem.send_keys(Keys.DOWN)
+elem.send_keys(Keys.DOWN)
+elem.send_keys(Keys.ENTER)
+time.sleep(1)
+driver.find_element(By.XPATH, '//button[@class="button--g31Xx applicationWidgetButtons__button"]').click()
+time.sleep(1)
+#Семейное положение
+elem = driver.find_element(By.XPATH, '//div[@class="content--CSXGL"]')
+elem.click()
+elem.send_keys(Keys.DOWN)
+elem.send_keys(Keys.ENTER)
+time.sleep(1)
+elem = driver.find_element(By.XPATH, '//input[@class="smartInput__input--zqFgL"]')
+elem.send_keys('1')
+driver.find_element(By.XPATH, '//button[@class="button--g31Xx applicationWidgetButtons__button"]').click()
+time.sleep(1)
+#Документы
+elem = driver.find_element(By.XPATH, '//input[@class="smartInput__input--zqFgL"]')
+slow_input(elem, '26179646208')
+driver.find_element(By.XPATH, '//button[@class="button--g31Xx applicationWidgetButtons__button"]').click()
+time.sleep(1)
+#Адрес проживания
+elem = driver.find_element(By.XPATH, '//div[@class="content--CSXGL"]')
+elem.click()
+elem.send_keys(Keys.DOWN)
+elem.send_keys(Keys.DOWN)
+elem.send_keys(Keys.DOWN)
+elem.send_keys(Keys.ENTER)
+driver.find_element(By.XPATH, '//button[@class="button--g31Xx applicationWidgetButtons__button"]').click()
+time.sleep(1)
+#Контакные данные
+driver.find_element(By.XPATH, '//button[@class="button--g31Xx applicationWidgetButtons__button"]').click()
+time.sleep(1)
+#Дополнительные сведения
+elem = driver.find_element(By.XPATH, '//input[@class="smartInput__input--zqFgL"]')
+slow_input(elem, 'Код')
+driver.find_element(By.XPATH, '//button[@class="button--g31Xx applicationWidgetButtons__button"]').click()
+time.sleep(1)
 
+#Информация о трудоустройстве
+elem = driver.find_element(By.XPATH, '//div[@class="content--CSXGL"]')
+elem.click()
+elem.send_keys(Keys.ENTER)
+elem = driver.find_element(By.XPATH, '//input[@class="smartInput__input--zqFgL"]')
+slow_input(elem, 'Россельхозбанк')
+elem.send_keys(Keys.DOWN)
+elem.send_keys(Keys.ENTER)
+driver.find_element(By.XPATH, '//button[@class="button--g31Xx applicationWidgetButtons__button"]').click()
+time.sleep(1)
+#Контакты работодателя
+driver.find_element(By.XPATH, '//button[@class="button--g31Xx applicationWidgetButtons__button"]').click()
+time.sleep(1)
+#Информация о должности и стаже
+WebDriverWait(driver, 10).until(
+    EC.element_to_be_clickable((By.XPATH, '//div[@class="content__control--U7mF7"]'))).click()
+year_arrow = WebDriverWait(driver, 10).until(
+    EC.element_to_be_clickable((By.XPATH, '//div[@class="date__leftDoubleArrow--uitfe"]')))
+month_arrow = WebDriverWait(driver, 10).until(
+    EC.element_to_be_clickable((By.XPATH, '//div[@class="date__leftArrow--dfVtT"]')))
+for i in range(random.randint(1, 5)):
+    year_arrow.click()
+    time.sleep(0.05)  # pause for 0.05 second for i in range(random.randint(21, 65)):
+for i in range(random.randint(0, 12)):
+    month_arrow.click()
+    time.sleep(0.05)  # pause for 0.05 seconds
+
+dates = driver.find_elements(By.XPATH,
+                             '//li[@class="date__listItem--y10uz"]')
+date = random.choice(dates)
+date.click()
+#Должность  и стаж
+elem = driver.find_element(By.XPATH, '//div[@class="content--CSXGL"]')
+elem.click()
+elem.send_keys(Keys.DOWN)
+elem.send_keys(Keys.ENTER)
+forms = driver.find_elements(By.XPATH, '//input[@type="text"]')
+forms[1].send_keys('1')
+forms[2].send_keys('2')
+forms[3].send_keys('3')
+forms[4].send_keys('4')
+driver.find_element(By.XPATH, '//button[@class="button--g31Xx applicationWidgetButtons__button"]').click()
+time.sleep(2)
+#Информация о доходах
+elem = driver.find_element(By.XPATH, '//div[@class="content--CSXGL"]')
+elem.click()
+elem.send_keys(Keys.DOWN)
+elem.send_keys(Keys.ENTER)
+
+elems = driver.find_elements(By.XPATH, '//input[@class="smartInput__input--zqFgL"]')
+slow_input(elems[0], '100000')
+slow_input(elems[1], '10000')
+driver.find_element(By.XPATH, '//button[@class="button--g31Xx applicationWidgetButtons__button"]').click()
+time.sleep(5)
+#Документы заемщика
+#Согласие
+WebDriverWait(driver, 10).until(
+    EC.element_to_be_clickable((By.XPATH, '//button[@class="button--g31Xx button__white--pn5Tx applicationActions__signButton"]'))).click()
+WebDriverWait(driver, 10).until(
+    EC.element_to_be_clickable((By.XPATH, '//button[@class="button--g31Xx modal-consent__button-sing"]'))).click()
+#Ознакомится и отправить
+WebDriverWait(driver, 10).until(
+    EC.element_to_be_clickable((By.XPATH, '//button[@class="button--g31Xx applicationActions__submitButton"]'))).click()
+time.sleep(3)
+
+# SMS
+fill_fake_sms()
+#Assert result
+message = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//div[@class="modal-sent__title"]')))
+assert message.text == 'Заявка успешно отправлена'
 driver.quit()
+
