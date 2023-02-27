@@ -40,9 +40,6 @@ def fill_fake_sms():
     sms_digits[2].send_keys('3')
     sms_digits[3].send_keys('4')
     driver.find_element(By.XPATH, '//button[@class="button--g31Xx sms-confirmation__button"]').click()
-    time.sleep(1)
-
-
 
 driver = webdriver.Chrome()
 driver.maximize_window()
@@ -175,7 +172,6 @@ WebDriverWait(driver, 10).until(EC.element_to_be_clickable(
 
 WebDriverWait(driver, 10).until(
     EC.element_to_be_clickable((By.XPATH, '//button[@class="button--g31Xx application-short__submit-button"]'))).click()
-time.sleep(2)
 WebDriverWait(driver, 10).until(
      EC.presence_of_all_elements_located((By.XPATH, '//input[@class="smsCodeInput__digit--O14Lj"]')))
 # SMS
@@ -290,9 +286,13 @@ elem.click()
 elem.send_keys(Keys.DOWN)
 elem.send_keys(Keys.ENTER)
 forms = driver.find_elements(By.XPATH, '//input[@type="text"]')
+forms[1].click()
 forms[1].send_keys('1')
+forms[2].click()
 forms[2].send_keys('2')
+forms[3].click()
 forms[3].send_keys('3')
+forms[4].click()
 forms[4].send_keys('4')
 driver.find_element(By.XPATH, '//button[@class="button--g31Xx applicationWidgetButtons__button"]').click()
 time.sleep(2)
@@ -306,7 +306,6 @@ elems = driver.find_elements(By.XPATH, '//input[@class="smartInput__input--zqFgL
 slow_input(elems[0], '100000')
 slow_input(elems[1], '10000')
 driver.find_element(By.XPATH, '//button[@class="button--g31Xx applicationWidgetButtons__button"]').click()
-time.sleep(5)
 #Документы заемщика
 #Согласие
 WebDriverWait(driver, 10).until(
@@ -316,7 +315,7 @@ WebDriverWait(driver, 10).until(
 #Ознакомится и отправить
 WebDriverWait(driver, 10).until(
     EC.element_to_be_clickable((By.XPATH, '//button[@class="button--g31Xx applicationActions__submitButton"]'))).click()
-time.sleep(3)
+time.sleep(2)
 
 # SMS
 fill_fake_sms()
