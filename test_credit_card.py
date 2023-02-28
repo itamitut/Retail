@@ -43,8 +43,8 @@ def fill_fake_sms():
 
 driver = webdriver.Chrome()
 driver.maximize_window()
-credit_cards = [ '/cards/putevaya', '/cards/amur']
-#'/cards/svoya',
+credit_cards = [ '/cards/svoya', '/cards/putevaya', '/cards/amur']
+#
 driver.get("https://portal-ui-cc.cprb.dev.rshbdev.ru")
 
 # кликаем ОК
