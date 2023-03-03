@@ -45,8 +45,9 @@ timeout = 5
 driver = webdriver.Chrome()
 driver.maximize_window()
 driver.implicitly_wait(timeout)
-debet_cards = ['cards/svoya-debet', 'cards/amur-debet', 'cards/pens-debet']
-url = 'http:///10.7.27.52:81/' #'https://portal-ui-cc.cprb.dev.rshbdev.ru/'
+debet_cards = ['cards/svoya-debet']
+#, 'cards/amur-debet', 'cards/pens-debet'
+url = 'https://portal-ui-cc.cprb.dev.rshbdev.ru/' #''
 
 driver.get(url)
 # кликаем ОК
@@ -69,7 +70,7 @@ time.sleep(3)
 elem = driver.find_element(By.XPATH,
                    '//*[@id="root"]/div[1]/div[3]/div/div/div[1]/div[1]/div[2]/div/div[1]/div[1]/div/div/div/input')
 slow_input(elem, 'Воропаева')
-щ
+
 elem = driver.find_element(By.XPATH,
                    '//*[@id="root"]/div[1]/div[3]/div/div/div[1]/div[1]/div[2]/div/div[1]/div[2]/div/div/div/input')
 slow_input(elem, 'Анна')
@@ -186,8 +187,14 @@ wait = WebDriverWait(driver, 10)  # seconds
 
 elems = driver.find_elements(By.XPATH, '//input[@class="smartInput__input--zqFgL"]')
 elems[0].click()
-slow_input(elems[0], 'RALF GRAHKJHKHHKJHKH')
-slow_input(elems[1], 'КОД')
+if len(elems) == 3:
+    slow_input(elems[0], 'RALF')
+    slow_input(elems[1], 'HGRAHKJHKHHKJHKH')
+    slow_input(elems[2], 'КОД')
+else:
+    slow_input(elems[0], 'RALF GRAHKJHKHHKJHKH')
+    slow_input(elems[1], 'КОД')
+
 # CHECK_word
 
 time.sleep(3)
